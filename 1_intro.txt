@@ -1,0 +1,19 @@
+****middleware (body-parser) 
+->body-parser is a middleware in Node.js that is used to 
+parse the incoming request bodies in a middleware before 
+your handlers, making it easier to access the data. 
+It parses the body of incoming requests (e.g., form data or JSON) 
+and makes it available under the req.body property.
+
+->req may contains different forms of data so body-parser will take 
+that data and parse it in req.body so that we can directly use it.
+
+*** express router
+->server.js file contains many endpoints so it is bad practice to have 
+all apis in server.js file ,to overcome this we can use express router.
+
+->Express.Router is essentially a way to organize and manage routes in 
+an Express application. When building a web server or API with Express, 
+you typically have multiple routes (e.g., /home, /about, /users, etc.) 
+that handle different parts of your application. As your application grows, 
+managing all these routes in a single file can become unwieldy and hard to maintain.
