@@ -9,7 +9,7 @@ router.get("/",async(req,res)=>{
     try {
         
         const data=await Person.find();
-        data.forEach(d=> console.log("name: "+d.name + " age: "+d.age)) 
+        // data.forEach(d=> console.log("name: "+d.name + " age: "+d.age)) 
         res.send(data)
         return data;
         
