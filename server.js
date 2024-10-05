@@ -57,6 +57,7 @@ app.use("/person",localAuthMiddleware, personRoute)
 //i.e in case of POST method for person addition .
 
 
+
 app.use("/menu",menuRoute)
 
 

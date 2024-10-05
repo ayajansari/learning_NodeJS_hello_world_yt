@@ -78,7 +78,7 @@ router.put("/:id", async(req,res)=>{
     }
 })
 
-//DELETE route delete person record
+//DELETE route to delete person record
 
 router.delete("/:id", async(req,res)=>{
 

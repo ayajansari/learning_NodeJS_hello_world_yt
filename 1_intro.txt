@@ -17,3 +17,7 @@ an Express application. When building a web server or API with Express,
 you typically have multiple routes (e.g., /home, /about, /users, etc.) 
 that handle different parts of your application. As your application grows, 
 managing all these routes in a single file can become unwieldy and hard to maintain.
+
+->passport.js
+in this we create middleware function which uses local strategy of passport.js
+( i.e. takes username and password and do validation).
