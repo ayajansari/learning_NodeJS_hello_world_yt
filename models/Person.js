@@ -22,16 +22,18 @@ const personSchema=new mongoose.Schema({
     }
 })
 
+//Pre-middleware functions->these functions are executed just before making and operation
+//to database like save() operation or findAndUpdate() etc.
 
-//this is pre-middleware function which will be executed just before save operation on Person schema/db.
-
+//before saving any person data , convert the user password into hashed password.
 personSchema.pre('save',async function(next){
 
     console.log("yes working POST method")
-    const person= this; //this->current person data to be added 
+    const person= this; //this->current person data provided 
 
+    // POST method to add new person details is called 
     try{
-        const salt=await bcrypt.genSalt(10);    //use salt to encryption
+        const salt=await bcrypt.genSalt(10);
         const hashedPassword=await bcrypt.hash(person.password,salt);
         person.password=hashedPassword; //before saving person data in db convert to hashed Pass.
         next();
@@ -40,13 +42,15 @@ personSchema.pre('save',async function(next){
     }
 })
 
-//pre-middleware function executed just before findOneAndUpdate() function executes
+//convert password into hashed one.
 personSchema.pre('findOneAndUpdate',async function(next){
 
     console.log("yes working PUT method")
-    const update = this.getUpdate(); //current updated value provided by user
+    const update = this.getUpdate();
+
     const saltRounds = 10;
-    update.password = await bcrypt.hash(update.password, saltRounds);   //create hashed password then update
+    update.password = await bcrypt.hash(update.password, saltRounds);
+
     next();
     
 })

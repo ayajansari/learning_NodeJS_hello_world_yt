@@ -5,17 +5,17 @@ import bodyParser from "body-parser"
 import personRoute from "./Routes/personRoute.js"
 import menuRoute from "./Routes/menuRoute.js"
 import passport from "./Auth.js"
-
+import dotenv from "dotenv"
+import { jwtAuthMiddleware } from "./jwt.js"
 
 
 const app=express()
 const port=process.env.PORT || 3000
 app.use(bodyParser.json())
+dotenv.config()
 
 
-/*
-user defined middleware function
-
+//user defined middleware function
 //how to use our own middleware function  to get which route is requested by user
 
 const logRequest=(req,res,next)=>{      // this will display which route is requested
@@ -26,17 +26,15 @@ const logRequest=(req,res,next)=>{      // this will display which route is requ
     
 }
 
-//we can use above function to be called whenever "/" route hits just like below
+//we can use above function to be called whenever "/" route hits
 // app.get("/",logRequest,(req,res)=>{
-//     res.send("welcome to my website")    
+//     res.send("welcome to my website")
 // })
 //OR
 app.use(logRequest);    //if we want to add logRequest functionality to every route
 //then use it like middleware
 //NOTE-: middle function and use should be on top in server.js file i.e. before the routes definition
-//middleware is executed first then code for that perticular route.
 
-*/
 
 //authentication using passport
 
@@ -49,7 +47,7 @@ app.get("/",localAuthMiddleware,(req,res)=>{
 })
 
 
-app.use("/person",localAuthMiddleware, personRoute)
+app.use("/person", personRoute)
 
 //after applying localAuthMiddleware to /person route now all routes
 //after /person../.. will require authentication details to proceed further.
@@ -57,8 +55,11 @@ app.use("/person",localAuthMiddleware, personRoute)
 //i.e in case of POST method for person addition .
 
 
-
 app.use("/menu",menuRoute)
+
+
+
+
 
 
 app.listen(port,()=>{

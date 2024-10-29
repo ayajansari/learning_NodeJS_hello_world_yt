@@ -1,18 +1,17 @@
 import passport from "passport";
 import LocalStrategy from "passport-local"
 import Person from "./models/Person.js";
+import bcrypt from "bcrypt"
 
-
-//using username and password is local strategy
 passport.use(new LocalStrategy( async(username,password,done)=>{
     try{
-        console.log("received credentials : ",username," ",password);
+        // console.log("received credentials : ",username," ",password);
         const user=await Person.findOne({username:username});
         if(!user){
             return done(null,false,{message:"Incorrect username."});
 
         }
-        const isPasswordMatch=user.password === password? true:false;
+        const isPasswordMatch=await bcrypt.compare(password,user.password);
         if(isPasswordMatch){
             return done(null,user);
         }else{

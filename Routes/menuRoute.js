@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import MenuItem from "../models/MenuItem.js";
 const router=express.Router();
 
@@ -8,32 +8,29 @@ router.get("/", async(req,res)=>{
     try {
         
         const data=await MenuItem.find();
-        res.send(data)
-        return ;
+        res.status(200).json({response:data})
         
     } catch (e) {
-        console.log("error occured, ",e);
-    }
-    res.send("error")
+        res.status(500).json({error:e})
+    } 
 })
 
-//POST method to add menu
+//POST method to add menu item
 router.post("/",async(req,res)=>{
     try{
 
         const data=req.body;
         const newItem=new MenuItem(data);
         await newItem.save();
-        console.log("menu added!")
-        res.send("success!")
+        res.status(200).json({response:"Menu Item is added Successfully!"})
         return 
     }catch(e){
-        console.log("error occured-",e)
+        res.status(500).json({error:e})
+
     }
-    res.send("error")
 })
 
-//GET method to list menu according to types
+//GET method to list menu according to menu item types
 router.get("/:menuType", async(req,res)=>{
 
     const menuType=req.params.menuType;
